@@ -1,14 +1,37 @@
-import DummyClass from '../src/safeget'
+import safeGet from '../src/safeget'
 
-/**
- * Dummy test
- */
-describe('Dummy test', () => {
+describe('safeGet', () => {
   it('works if true is truthy', () => {
     expect(true).toBeTruthy()
   })
 
-  it('DummyClass is instantiable', () => {
-    expect(new DummyClass()).toBeInstanceOf(DummyClass)
+  it('safeGet to get nested data', () => {
+    const a = {
+      b: {
+        c: 'c'
+      }
+    }
+    const result = safeGet(a, it => it.b.c)
+    expect(result).toEqual('c')
+  })
+
+  it('safeGet to get undefined data when result is undefined and default value is undefined', () => {
+    const a: any = {
+      b: {
+        c: 'c'
+      }
+    }
+    const result = safeGet(a, it => it.b.c.f)
+    expect(result).toEqual(undefined)
+  })
+
+  it('safeGet to get default data when result is undefined and given default data', () => {
+    const a: any = {
+      b: {
+        c: 'c'
+      }
+    }
+    const result = safeGet(a, it => it.b.c.f, 'default')
+    expect(result).toEqual('default')
   })
 })
