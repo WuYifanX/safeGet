@@ -1,8 +1,6 @@
-export default function safeGet<T, R>(
-  object: T,
-  func: (data: T) => R,
-  defaultValue?: R
-): R | undefined {
+import _ from 'lodash'
+
+export default function safeGet<T, R>(object: T, func: (data: T) => R, defaultValue?: R): R {
   let result = defaultValue
   try {
     result = func(object)
@@ -11,5 +9,7 @@ export default function safeGet<T, R>(
   if (result === undefined) {
     result = defaultValue
   }
+
+  // @ts-ignore
   return result
 }
